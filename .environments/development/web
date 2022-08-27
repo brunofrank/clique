@@ -1,0 +1,5 @@
+DATABASE_HOST=database
+CABLE_REDIS_HOST=redis
+WORKER_REDIS_HOST=redis
+REDIS_URL=redis://redis:6379/0
+DEVISE_JWT_SECRET_KEY=my$ecret
