@@ -1,0 +1,22 @@
+<%= form_with(model: [@post, comment], class: "contents", data: { controller: :form, "form-remove-after-submit-value": @replying_to.present? }) do |form| %>
+  <% if comment.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+      <ul>
+        <% comment.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.hidden_field :reply_to_id, value: @replying_to&.id %>
+
+  <div class="my-5">
+    <%= form.text_area :content, rows: 4, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full", placeholder: "Write your comment..." %>
+  </div>
+  <div class="flex flex-row-reverse">
+    <%= form.submit "Comment", class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>

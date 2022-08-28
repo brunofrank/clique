@@ -3,8 +3,10 @@
   <% group.members.each do |member| %>
     <li>
       <%= member.name %>
-      <%= link_to kick_out_group_url(@group, member_id: member.id), title: "Kick out!", data: { "turbo-method": "delete" } do %>
-        <i class="fa-solid fa-xmark"></i>
+      <% if group.owner.id == current_user.id %>
+        <%= link_to kick_out_group_url(@group, member_id: member.id), title: "Kick out!", data: { "turbo-method": "delete" } do %>
+          <i class="fa-solid fa-xmark"></i>
+        <% end %>
       <% end %>
     </li>
   <% end %>

@@ -1,0 +1,25 @@
+<%= turbo_frame_tag @comment do %>
+  <div id="<%= dom_id @comment %>" class="py-3">
+    <div class="text-1xl">
+      <%= @comment.content %>
+    </div>
+
+    <div class="flex pt-3 text-gray-500 text-xs">
+      <div class="px-10">
+        Last comment <%= distance_of_time_in_words(Time.current, @comment.created_at) %> ago
+      </div>
+      <div class="px-10">
+        <%= link_to "Edit", edit_post_comment_url(@comment.post, @comment) %>
+      </div>
+      <div class="px-10">
+        <%= link_to "Reply", new_post_comment_url(@comment.post, reply_to_id: @comment.id) %>
+      </div>
+    </div>
+
+    <div id="replies" class="flex pt-5 pl-10">
+      <%= turbo_frame_tag "comment_#{@comment.id}_replies" do %>
+        <%= render CommentItemComponent.with_collection(@comment.replies.order("created_at DESC"), current_user: @current_user) %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

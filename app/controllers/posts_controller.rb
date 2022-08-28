@@ -4,7 +4,7 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @posts = @group.posts
+    @posts = @group.posts.order("updated_at DESC")
   end
 
   # GET /posts/1 or /posts/1.json
@@ -26,6 +26,15 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.prepend(
+            "group_#{@group.id}_posts",
+            PostItemComponent.new(
+              post: @post,
+              current_user: current_user
+            ).render_in(view_context)
+          )
+        end
         format.html { redirect_to post_url(@post), notice: "Post was successfully created." }
         format.json { render :show, status: :created, location: @post }
       else

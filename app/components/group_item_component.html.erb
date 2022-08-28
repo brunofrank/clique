@@ -23,8 +23,16 @@
       <div class="px-10">
         <%= pluralize(@group.members.count, "Member") %>
       </div>
-      <div class="px-10">24 posts</div>
-      <div class="px-10">Last activity 3 days ago</div>
+      <div class="px-10">
+        <%= pluralize(@group.posts.count, "Posts") %>
+      </div>
+      <div class="px-10">
+        <% if @group.last_activity.present? %>
+          Last activity <%= distance_of_time_in_words(Time.current, @group.last_activity) %> ago
+        <% else %>
+          No activities yet
+        <% end %>
+      </div>
     </div>
   </div>
 <% end %>

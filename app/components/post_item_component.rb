@@ -5,6 +5,7 @@ class PostItemComponent < ApplicationComponent
 
   def initialize(post:, current_user:)
     @post = post
+    @group = post.group
     @current_user = current_user
   end
 end

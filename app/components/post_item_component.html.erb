@@ -9,17 +9,26 @@
 
     <div class="flex pt-3 text-gray-500 text-xs">
       <div class="px-10">
-        Last comment 3 days ago
+        <% if @post.comments.count.positive? %>
+          Last comment <%= distance_of_time_in_words(Time.current, @post.comments.order('created_at ASC').last.created_at) %> ago
+        <% else %>
+          No comments yet
+        <% end %>
       </div>
       <div class="px-10">
-        Edit
+        <%= link_to "Edit", edit_group_post_url(@group, @post) %>
       </div>
       <div class="px-10">
-        Delete
+        <%= link_to "Delete", [@group, @post], data: { "turbo-method": :delete } %>
       </div>
       <div class="px-10">
         Created by you
       </div>
+    </div>
+    <div class="py-3">
+      <%= link_to [@group, @post], data: { "turbo-frame": "_top" } do %>
+        View post ->
+      <% end %>
     </div>
   </div>
 <% end %>

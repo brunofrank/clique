@@ -1,15 +1,28 @@
-<div class="mx-auto md:w-2/3 w-full flex">
-  <div class="mx-auto">
-    <% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-    <% end %>
+<div class="w-full">
+  <div class="flex">
+    <div class="basis-3/4 pr-10">
+      <h1 class="font-bold text-4xl"><%= @post.title %></h1>
+      <div>
+        <%= @post.content %>
+      </div>
 
-    <%= render @post %>
+      <div class="flex justify-between items-center my-5">
+        <h1 class="font-bold text-4xl">Comments</h1>
+      </div>
 
-    <%= link_to 'Edit this post', edit_post_path(@post), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <div class="inline-block ml-2">
-      <%= button_to 'Destroy this post', post_path(@post), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
+      <div id="comments" class="min-w-full">
+        <%= turbo_frame_tag "post_#{@post.id}_comments", src: post_comments_url(@post) %>
+      </div>
     </div>
-    <%= link_to 'Back to posts', posts_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <div class="basis-1/4 p-5">
+    </div>
+  </div>
+
+  <div class="flex">
+    <div class="basis-3/4 pr-10">
+      <%= render "comments/form", comment: Comment.new %>
+    </div>
+    <div class="basis-1/4 p-5">
+    </div>
   </div>
 </div>
