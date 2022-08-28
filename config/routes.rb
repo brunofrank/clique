@@ -3,7 +3,12 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :groups
+  resources :groups do
+    member do
+      put :join
+      delete :leave
+    end
+  end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

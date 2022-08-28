@@ -5,10 +5,21 @@
 
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl">Groups</h1>
-    <%= link_to 'New group', new_group_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+  </div>
+
+  <div class="flex justify-between items-center py-5">
+    <div class="flex justify-center rounded-lg text-lg" role="group">
+      <%= link_to "All groups", groups_url,
+          class: [(params[:filter].nil? ? "bg-blue-500 text-white" : "bg-white text-blue-500 hover:bg-blue-500 hover:text-white"), "border border-r-0 border-blue-500 rounded-l-lg px-4 py-2 mx-0 outline-none focus:shadow-outline"].join(" ") %>
+      <%= link_to "Created by me", groups_url(filter: :created_by_me),
+          class: [(params[:filter] == "created_by_me" ? "bg-blue-500 text-white" : "bg-white text-blue-500 hover:bg-blue-500 hover:text-white"), "border border-blue-500 px-4 py-2 mx-0 outline-none focus:shadow-outline"].join(" ") %>
+      <%= link_to "Where I am member", groups_url(filter: :member),
+          class: [(params[:filter] == "member" ? "bg-blue-500 text-white" : "bg-white text-blue-500 hover:bg-blue-500 hover:text-white"), "border border-l-0 border-blue-500 rounded-r-lg px-4 py-2 mx-0 outline-none focus:shadow-outline"].join(" ") %>
+    </div>
+    <%= link_to '+ Create a new group', new_group_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
   </div>
 
   <div id="groups" class="min-w-full">
-    <%= render @groups %>
+    <%= render GroupItemComponent.with_collection(@groups, current_user: current_user) %>
   </div>
 </div>

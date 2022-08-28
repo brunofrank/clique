@@ -1,9 +1,15 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: %i[ show edit update destroy ]
+  before_action :set_group, only: %i[ show edit update destroy join leave ]
 
   # GET /groups or /groups.json
   def index
-    @groups = Group.all
+    if filter_params[:filter] == "created_by_me"
+      @groups = Group.created_by(current_user)
+    elsif filter_params[:filter] == "member"
+      @groups = Group.is_member(current_user)
+    else
+      @groups = Group.all
+    end
   end
 
   # GET /groups/1 or /groups/1.json
@@ -15,13 +21,37 @@ class GroupsController < ApplicationController
     @group = Group.new
   end
 
+  def join
+    @group.members << current_user
+
+    render turbo_stream: turbo_stream.update(
+      "group_#{@group.id}",
+      GroupItemComponent.new(
+        group: @group,
+        current_user: current_user
+      ).render_in(view_context)
+    )
+  end
+
+  def leave
+    @group.members.delete(current_user)
+
+    render turbo_stream: turbo_stream.update(
+      "group_#{@group.id}",
+      GroupItemComponent.new(
+        group: @group,
+        current_user: current_user
+      ).render_in(view_context)
+    )
+  end
+
   # GET /groups/1/edit
   def edit
   end
 
   # POST /groups or /groups.json
   def create
-    @group = Group.new(group_params)
+    @group = Group.new(group_params.merge(owner: current_user))
 
     respond_to do |format|
       if @group.save
@@ -58,13 +88,18 @@ class GroupsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_group
-      @group = Group.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def group_params
-      params.require(:group).permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_group
+    @group = Group.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def group_params
+    params.require(:group).permit(:name)
+  end
+
+  def filter_params
+    params.permit(:filter)
+  end
 end
