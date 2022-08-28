@@ -7,7 +7,10 @@ Rails.application.routes.draw do
     member do
       put :join
       delete :leave
+      delete :kick_out
     end
+
+    resources :posts
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

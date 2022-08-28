@@ -1,0 +1,25 @@
+<%= turbo_frame_tag @post do %>
+  <div id="<%= dom_id @post %>" class="py-3">
+    <div class="text-3xl">
+      <%= @post.title %>
+    </div>
+    <div class="text-1xl">
+      <%= @post.content %>
+    </div>
+
+    <div class="flex pt-3 text-gray-500 text-xs">
+      <div class="px-10">
+        Last comment 3 days ago
+      </div>
+      <div class="px-10">
+        Edit
+      </div>
+      <div class="px-10">
+        Delete
+      </div>
+      <div class="px-10">
+        Created by you
+      </div>
+    </div>
+  </div>
+<% end %>

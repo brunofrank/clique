@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_27_201933) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_28_014436) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -32,6 +32,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_27_201933) do
     t.index ["user_id"], name: "index_groups_users_on_user_id"
   end
 
+  create_table "posts", force: :cascade do |t|
+    t.string "title", default: "", null: false
+    t.text "content", default: "", null: false
+    t.bigint "author_id", null: false
+    t.bigint "group_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_posts_on_author_id"
+    t.index ["group_id"], name: "index_posts_on_group_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "email", default: "", null: false
@@ -48,4 +59,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_27_201933) do
   add_foreign_key "groups", "users", column: "owner_id"
   add_foreign_key "groups_users", "groups"
   add_foreign_key "groups_users", "users"
+  add_foreign_key "posts", "groups"
+  add_foreign_key "posts", "users", column: "author_id"
 end

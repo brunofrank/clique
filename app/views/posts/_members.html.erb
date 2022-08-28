@@ -1,0 +1,11 @@
+<ul>
+  <li><%= group.owner.name %></li>
+  <% group.members.each do |member| %>
+    <li>
+      <%= member.name %>
+      <%= link_to kick_out_group_url(@group, member_id: member.id), title: "Kick out!", data: { "turbo-method": "delete" } do %>
+        <i class="fa-solid fa-xmark"></i>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

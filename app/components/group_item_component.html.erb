@@ -3,7 +3,7 @@
     <div class="flex flex-row">
       <div class="basis-3/4">
         <span class="text-2xl">
-          <%= link_to @group.name, @group, data: { "turbo-frame": "_top" } %>
+          <%= link_to @group.name, group_posts_url(@group), data: { "turbo-frame": "_top" } %>
         </span>
         <span class="px-5 text-gray-500 text-xs">
           <%= @group.owner == @current_user ? "Created by you" : "" %>

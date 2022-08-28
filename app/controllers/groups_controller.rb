@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: %i[ show edit update destroy join leave ]
+  before_action :set_group, only: %i[ show edit update destroy join leave kick_out]
 
   # GET /groups or /groups.json
   def index
@@ -42,6 +42,16 @@ class GroupsController < ApplicationController
         group: @group,
         current_user: current_user
       ).render_in(view_context)
+    )
+  end
+
+  def kick_out
+    member = User.find(params[:member_id])
+    @group.members.delete(member)
+
+    render turbo_stream: turbo_stream.update(
+      "group_#{@group.id}_members",
+      partial: "posts/members", locals: { group: @group }
     )
   end
 
