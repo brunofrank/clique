@@ -5,7 +5,12 @@
 
   <div class="flex">
     <div class="basis-3/4 pr-10">
-      <h1 class="font-bold text-4xl"><%= @group.name %></h1>
+      <h1 class="font-bold text-4xl">
+        <%= @group.name %>
+        <%= link_to edit_group_url(@group) do %>
+        <i class="fa-solid fa-gear"></i>
+        <% end %>
+      </h1>
 
       <%= render "form", post: Post.new %>
 
