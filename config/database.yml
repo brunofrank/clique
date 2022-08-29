@@ -3,7 +3,7 @@ default: &default
   host: <%= ENV['DATABASE_HOST'] %>
   username: <%= ENV['POSTGRES_USER'] %>
   password: <%= ENV['POSTGRES_PASSWORD'] %>
-  database: <%= ENV['POSTGRES_DB'] || 'clique_dev' %>
+  database: <%= ENV['POSTGRES_DB'] || 'zion_dev' %>
   port: <%= ENV.fetch('POSTGRES_PORT', 5432) %>
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
