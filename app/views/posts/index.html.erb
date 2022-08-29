@@ -12,7 +12,9 @@
         <% end %>
       </h1>
 
+      <% if @group.owner.id == current_user.id || @group.members.include?(current_user) %>
       <%= render "form", post: Post.new %>
+      <% end %>
 
       <div class="flex justify-between items-center my-5">
         <h1 class="font-bold text-4xl">All Posts</h1>
