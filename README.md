@@ -1,24 +1,25 @@
-# README
+# CLIQUE
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+To improve
 
-Things you may want to cover:
+### 🔨 Dev-tool utility
 
-* Ruby version
+We have a developer tools - a utility command line script - to make the developer life easier when using `docker` and `docker-compose`.
+It's a list of simple shortcuts (very easy to memorize) to run more complex commands.
 
-* System dependencies
+In order to install it, follow these steps:
 
-* Configuration
+```
+cd docker/dev-tools
+chmod +x install
+./install
+```
 
-* Database creation
+You then need to reenter your shell session to be able to test it. If it worked, you will be able to run `clq`. This should output the `HELP` command, with every available command you can run, with a short explanation.
 
-* Database initialization
+#### Notes
 
-* How to run the test suite
+In case it didn't work, you can manually add this file to your `bin` folder by running
+`sudo cp docker/dev-tools/bin/lds /usr/local/bin`.
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Please check the [Cloque developer tools](./dev-tools/README.md) for more information.
