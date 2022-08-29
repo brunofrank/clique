@@ -12,6 +12,11 @@
   </head>
 
   <body>
+    <div class="w-full flex flex-row-reverse pr-10">
+      <%= link_to "Sign out", destroy_user_session_url, data: { 'turbo-method': :delete, 'turbo-target': '_top' }, class: "px-5 text-xl" %>
+      <%= link_to "Groups", groups_url, class: "px-5 text-xl underline" %>
+
+    </div>
     <main class="container mx-auto mt-28 px-5 flex">
       <%= yield %>
     </main>

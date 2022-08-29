@@ -8,9 +8,14 @@
       <div class="px-10">
         Last comment <%= distance_of_time_in_words(Time.current, @comment.created_at) %> ago
       </div>
+      <% if @comment.created_by.id == @current_user.id %>
       <div class="px-10">
         <%= link_to "Edit", edit_post_comment_url(@comment.post, @comment) %>
       </div>
+      <div class="px-10">
+        <%= link_to "Delete", post_comment_url(@comment.post, @comment), data: { 'turbo_method': :delete } %>
+      </div>
+      <% end %>
       <div class="px-10">
         <%= link_to "Reply", new_post_comment_url(@comment.post, reply_to_id: @comment.id) %>
       </div>

@@ -15,14 +15,16 @@
           No comments yet
         <% end %>
       </div>
+      <% if @post.author.id == @current_user.id %>
+        <div class="px-10">
+          <%= link_to "Edit", edit_group_post_url(@group, @post) %>
+        </div>
+        <div class="px-10">
+          <%= link_to "Delete", [@group, @post], data: { "turbo-method": :delete } %>
+        </div>
+      <% end %>
       <div class="px-10">
-        <%= link_to "Edit", edit_group_post_url(@group, @post) %>
-      </div>
-      <div class="px-10">
-        <%= link_to "Delete", [@group, @post], data: { "turbo-method": :delete } %>
-      </div>
-      <div class="px-10">
-        Created by you
+        Created by <%= @post.author.id == @current_user.id ? "You" : @post.author.name %>
       </div>
     </div>
     <div class="py-3">
